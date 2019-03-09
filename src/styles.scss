@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+// regular style toast
+@import '~ngx-toastr/toastr.css';
+
+
+
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~ngx-toastr/toastr-bs4-alert';
+
+a:hover{
+  cursor: pointer;
+}
+.form-control, .input-group-text{
+  border: 1px solid #0080ff;
+}
+
+table.table-hover tbody tr:hover {
+  cursor: pointer;
+}
+
+.is-invaid{
+  border: solid 1px red;
+}
+
+
+

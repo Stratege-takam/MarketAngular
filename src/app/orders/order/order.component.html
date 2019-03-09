@@ -1,0 +1,85 @@
+<form #form="ngForm" class="row" (ngSubmit)="onSubmitForm()" autocomplete="off"  *ngIf="order">
+  <input type="hidden" name="Id" #Id="ngModel" [(ngModel)]="order.Id">
+  <div class="form-group col-12 col-sm-6">
+    <label for="OrderNo">Order No. : </label>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text">#</div>
+      </div>
+      <input type="text" #OrderNo="ngModel" name="OrderNo" id="OrderNo" class="form-control" [(ngModel)]="order.OrderNo" readonly />
+    </div>
+  </div>
+  <div class="form-group col-12 col-sm-6">
+    <label for="PMethod">Payement Method  </label>
+    <select type="text" name="PMethod"
+            [class.is-invaid]="!isValid && order.PMethod ==='' "
+            [class.text-danger]="!isValid && order.PMethod ==='' "
+            #CustomerId="ngModel" id="PMethod" class="form-control" [(ngModel)]="order.PMethod" >
+      <option value="">-Select-</option>
+
+      <option value="Cash"> Cash </option>
+      <option value="Card"> Card </option>
+    </select>
+  </div>
+
+  <div class="form-group col-12 col-sm-6">
+    <label for="CustomerId">Customer  </label>
+    <select type="text" #CustomerId="ngModel"
+            [class.is-invaid]="!isValid && order.CustomerId === 0 "
+            [class.text-danger]="!isValid && order.CustomerId === 0 "
+            name="CustomerId" id="CustomerId" class="form-control" [(ngModel)]="order.CustomerId" >
+      <option value="0">-Select-</option>
+      <option *ngFor="let customer of customerList" value="{{ customer.Id }}"> {{ customer.Name }} </option>
+    </select>
+  </div>
+
+  <div class="form-group col-12 col-sm-6">
+    <label for="GTotal">Grand Total  </label>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text">$</div>
+      </div>
+      <input type="text" #OrderNo="ngModel" name="GTotal" id="GTotal" class="form-control" [(ngModel)]="order.GTotal" readonly />
+    </div>
+  </div>
+  <!-- order items table -->
+  <div class="form-group col-12">
+    <table class="table table-borderless ">
+      <thead class="thead-light">
+      <th>Food</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+      <th>
+        <a class="btn btn-sm btn-success text-white" (click)="onAddOrEditOrderItem(null,order.Id)">
+          <i class="fa fa-plus"></i> Add Item
+        </a>
+      </th>
+      </thead>
+      <tbody>
+      <tr *ngIf="orderItems.length === 0 " >
+        <td class="font-italic text-center" colspan="5"  [class.text-danger]="!isValid && orderItems.length === 0 ">
+          No foof item selected for this order.
+        </td>
+      </tr>
+      <tr *ngFor="let item of orderItems; let i=index;">
+        <td>{{ item.ItemName }}</td>
+        <td>{{ item.Price }}</td>
+        <td>{{ item.Quantity }}</td>
+        <td>{{ item.Total }}</td>
+        <td>
+          <a  class="btn btn-sm btn-info text-white" (click)="onAddOrEditOrderItem(i,order.Id)">
+            <i class="fa fa-pencil"></i>
+          </a>
+          <a  class="btn btn-sm btn-danger text-white ml-2" (click)="onDeleteOrderItem(item.Id,i)">
+            <i class="fa fa-trash"></i>
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <button type="submit" class="btn btn-dark" > <i class="fa fa-database"></i> Submit </button>
+  <a type="submit" class="btn btn-outline-dark ml-1" routerLink="/orders" > <i class="fa fa-table"></i> View Orders </a>
+</form>

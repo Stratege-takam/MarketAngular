@@ -1,0 +1,50 @@
+<h4 class="display-4"> Order Food Item </h4>
+<hr>
+
+<form class="row" #form="ngForm" autocomplete="off" *ngIf="orderItem" (ngSubmit)="onSubmit(form)" >
+  <input type="hidden" #OrderId="ngModel" name="OrderId" id="OrderId" class="form-control" [(ngModel)]="orderItem.OrderId" >
+  <input type="hidden" #Id="ngModel" name="Id" id="Id" class="form-control" [(ngModel)]="orderItem.Id" >
+  <input type="hidden" #ItemName="ngModel" name="ItemName" id="ItemName" class="form-control" [(ngModel)]="orderItem.ItemName" >
+  <div class="form-group col-12">
+    <label for="ItemId">Food Item  </label>
+    <select type="text" #ItemId="ngModel" name="ItemId" id="ItemId" class="form-control" [(ngModel)]="orderItem.ItemId"
+            (change)="onUpdatePrice($event.target)"
+            [class.is-invaid]="!isValid && orderItem.ItemId === 0 "
+            [class.text-danger]="!isValid && orderItem.ItemId === 0 "
+    >
+      <option value="0">-Select-</option>
+      <option *ngFor="let item of itemList" value="{{item.Id}}" >{{item.Name}}</option>
+    </select>
+  </div>
+  <div class="form-group col-12 col-sm-6">
+    <label for="Price">Price </label>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text">$</div>
+      </div>
+      <input type="text" #Price="ngModel" name="Price" id="Price" class="form-control" [(ngModel)]="orderItem.Price" readonly />
+    </div>
+  </div>
+  <div class="form-group col-12 col-sm-6">
+    <label for="Quantity">Quantity </label>
+    <input type="text" #Quantity="ngModel" name="Quantity" id="Quantity" class="form-control" [(ngModel)]="orderItem.Quantity"
+           (keyup)="onUpdateTotal()"
+           [class.is-invaid]="!isValid && orderItem.Quantity === 0 "
+           [class.text-danger]="!isValid && orderItem.Quantity === 0 "
+    />
+  </div>
+  <div class="form-group col-12">
+    <label for="Total">Total </label>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text">$</div>
+      </div>
+      <input type="text" #Price="ngModel" name="Total" id="Total" class="form-control" [(ngModel)]="orderItem.Total" readonly />
+    </div>
+  </div>
+
+  <div class="form-group col-12">
+    <button type="submit" class="btn btn-dark" > <i class="fa fa-database"></i> Submit </button>
+    <button type="submit" class="btn btn-outline-dark ml-1" [mat-dialog-close]  > <i class="fa fa-close"></i> Close </button>
+  </div>
+</form>
